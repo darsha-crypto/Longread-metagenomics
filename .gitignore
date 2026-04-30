@@ -1,0 +1,6 @@
+.nextflow*
+work/
+run.log
+*.log
+*.tmp
+.DS_Store
