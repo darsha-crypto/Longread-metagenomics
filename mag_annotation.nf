@@ -37,6 +37,9 @@ workflow {
     gtdbtk_db_ch     = Channel.fromPath(params.gtdbtk_db)
     ipr_dir_ch       = Channel.fromPath(params.interproscan_dir)
 
+    // Names of the high-quality bins, used to split Prodigal proteins into HQ and MQ sets
+    def hq_names = files(params.hq_bins).collect { it.baseName }
+
     // ── Stage 7a: GTDB-tk taxonomy ────────────────────────────────────────────
     GTDBTK(params.sample,
            hq_bins_ch.collect(),
@@ -54,11 +57,11 @@ workflow {
 
     // Run HQ and MQ separately (prevents H2 DB corruption)
     INTERPROSCAN_HQ(params.sample,
-                    PRODIGAL.out.faa_files.filter { it.name =~ /MB_bin\.(6|13|22|69|75|78)|MX_bin\.(018|022)/ }.collect(),
+                    PRODIGAL.out.faa_files.flatten().filter { it.baseName in hq_names }.collect(),
                     INTERPROSCAN_SETUP.out.ipr_patched)
 
     INTERPROSCAN_MQ(params.sample,
-                    PRODIGAL.out.faa_files.filter { it.name =~ /MB_bin\.(11|14|21|29)|MX_bin\.020_sub/ }.collect(),
+                    PRODIGAL.out.faa_files.flatten().filter { !(it.baseName in hq_names) }.collect(),
                     INTERPROSCAN_SETUP.out.ipr_patched)
 
     // Merge HQ + MQ results

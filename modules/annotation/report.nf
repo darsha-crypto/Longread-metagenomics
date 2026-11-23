@@ -8,6 +8,9 @@
 process INSTALL_DEPS {
     tag "$sample"
 
+    input:
+    val sample
+
     output:
     val true, emit: deps_ready
 
@@ -20,8 +23,8 @@ process INSTALL_DEPS {
 
 process REPORT {
     container "quay.io/biocontainers/python:3.11--1"
-    tag "$sample"/${task.ext.sample ?: params.sample}/"Stage8_Excel" }, mode: "copy"
-
+    tag "$sample"
+    publishDir "${params.outdir}/${sample}/Stage8_Excel", mode: 'copy'
     input:
     val  sample
     path quality_report      // CheckM2 quality_report.tsv
@@ -35,6 +38,8 @@ process REPORT {
 
     script:
     """
+    # The report runs in its own container, so install its Python packages here
+    pip install -q openpyxl pandas
     python3 << 'PYEOF'
 import pandas as pd
 from openpyxl import Workbook

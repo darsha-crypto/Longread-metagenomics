@@ -28,8 +28,8 @@ process INTERPROSCAN_SETUP {
 
 process INTERPROSCAN_HQ {
     container "quay.io/biocontainers/interproscan:5.59_91.0--hec16e2b_1"
-    tag "$sample"/${task.ext.sample ?: params.sample}/"12_interproscan" }, mode: "copy"
-
+    tag "$sample"
+    publishDir "${params.outdir}/${sample}/12_interproscan", mode: 'copy'
     input:
     val  sample
     path hq_faa_files
@@ -77,8 +77,8 @@ process INTERPROSCAN_HQ {
 
 process INTERPROSCAN_MQ {
     container "quay.io/biocontainers/interproscan:5.59_91.0--hec16e2b_1"
-    tag "$sample"/${task.ext.sample ?: params.sample}/"12_interproscan" }, mode: "copy"
-
+    tag "$sample"
+    publishDir "${params.outdir}/${sample}/12_interproscan", mode: 'copy'
     input:
     val  sample
     path mq_faa_files
@@ -125,8 +125,8 @@ process INTERPROSCAN_MQ {
 }
 
 process MERGE_INTERPROSCAN {
-    tag "$sample"/${task.ext.sample ?: params.sample}/"12_interproscan" }, mode: "copy"
-
+    tag "$sample"
+    publishDir "${params.outdir}/${sample}/12_interproscan", mode: 'copy'
     input:
     val  sample
     path hq_tsv

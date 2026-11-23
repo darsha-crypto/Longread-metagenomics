@@ -7,8 +7,8 @@
 
 process PRODIGAL {
     container "quay.io/biocontainers/prodigal:2.6.3--h577a1d6_11"
-    tag "$sample"/${task.ext.sample ?: params.sample}/"11_prodigal" }, mode: "copy"
-
+    tag "$sample"
+    publishDir "${params.outdir}/${sample}/11_prodigal", mode: 'copy'
     input:
     val  sample
     path hq_bins
