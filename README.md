@@ -154,6 +154,7 @@ From a bioethanol fermentation metagenome sequenced with PacBio HiFi:
 ├── mag_annotation.nf          # stages 7–8
 ├── nextflow.config            # parameters, profiles and resources
 ├── samplesheet.csv            # example sample sheet
+├── LICENSE                    # MIT license
 └── modules/
     ├── longread/              # qc, assembly, taxonomy, binning, checkm2, coverm
     └── annotation/            # gtdbtk, prodigal, interproscan, report
@@ -167,4 +168,4 @@ Darsha Prabhaharan, Hanyang University, Seoul, Republic of Korea
 
 ## License
 
-Shared for educational and research purposes.
+MIT. See [`LICENSE`](LICENSE).
