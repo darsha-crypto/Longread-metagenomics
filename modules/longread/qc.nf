@@ -35,7 +35,7 @@ process FILTER_READS {
     script:
     """
     filtlong \
-        --min_length 1000 \
+        --min_length ${params.min_read_length} \
         --min_mean_q 90 \
         --target_bases 14000000000 \
         ${reads} | gzip > ${sample}.filtered.fastq.gz

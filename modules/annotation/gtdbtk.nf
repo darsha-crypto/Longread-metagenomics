@@ -7,8 +7,8 @@
 
 process GTDBTK {
     container "quay.io/biocontainers/gtdbtk:2.7.1--pyhdfd78af_1"
-    tag "$sample"/${task.ext.sample ?: params.sample}/"10_gtdb" }, mode: "copy"
-
+    tag "$sample"
+    publishDir "${params.outdir}/${sample}/10_gtdb", mode: 'copy'
     input:
     val  sample
     path hq_bins
